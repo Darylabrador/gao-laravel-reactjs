@@ -1,0 +1,62 @@
+html, body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px;
+    background-color: grey;
+}
+
+
+.whiteFont {
+    color: white;
+}
+
+.redFont {
+    color: red;
+}
+
+.greenFont {
+    color: green;
+}
+
+#btnWelcome {
+    font-weight: bold;
+}
+
+.ordinateurGrid {
+    display: flex;
+    width: 100% !important;
+}
+
+#cardContainer {
+    margin-top: 15px;
+    padding: 0 15px;
+}
+
+.ordinateurHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90% !important;
+    margin-left: 15px;
+    padding-bottom: 5px;
+    border-bottom:  3px solid black;
+}
+
+.MuiButton-text {
+    padding: 0 4px !important;
+}
+
+.MuiButton-root {
+    min-width: 10px !important;
+}
