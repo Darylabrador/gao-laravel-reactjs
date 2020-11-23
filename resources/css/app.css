@@ -60,3 +60,11 @@ header {
 .MuiButton-root {
     min-width: 10px !important;
 }
+
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
