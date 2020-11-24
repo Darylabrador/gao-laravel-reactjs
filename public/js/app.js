@@ -105853,20 +105853,66 @@ var Home = /*#__PURE__*/function (_Component) {
     }()
   }, {
     key: "handleChangePage",
-    value: function handleChangePage(event, value) {
-      this.setState({
-        currentPage: value
-      });
-      this.getAttribution();
-    }
+    value: function () {
+      var _handleChangePage = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(event, value) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.setState({
+                  currentPage: value
+                });
+
+              case 2:
+                _context2.next = 4;
+                return this.getAttribution();
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function handleChangePage(_x, _x2) {
+        return _handleChangePage.apply(this, arguments);
+      }
+
+      return handleChangePage;
+    }()
   }, {
     key: "handleDateChange",
-    value: function handleDateChange(event, value) {
-      this.setState({
-        currentDate: value
-      });
-      this.getAttribution();
-    }
+    value: function () {
+      var _handleDateChange = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(event, value) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _context3.next = 2;
+                return this.setState({
+                  currentDate: value
+                });
+
+              case 2:
+                _context3.next = 4;
+                return this.getAttribution();
+
+              case 4:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function handleDateChange(_x3, _x4) {
+        return _handleDateChange.apply(this, arguments);
+      }
+
+      return handleDateChange;
+    }()
   }, {
     key: "render",
     value: function render() {

@@ -51,14 +51,14 @@ export default class Home extends Component {
         } 
     }
 
-    handleChangePage(event, value){
-        this.setState({ currentPage: value });
-        this.getAttribution();
+    async handleChangePage(event, value){
+        await this.setState({ currentPage: value });
+        await this.getAttribution();
     }
 
-    handleDateChange(event, value){
-        this.setState({ currentDate: value });
-        this.getAttribution();
+    async handleDateChange(event, value){
+        await this.setState({ currentDate: value });
+        await this.getAttribution();
     }
 
     render() {
