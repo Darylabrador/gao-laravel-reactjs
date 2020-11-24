@@ -10,6 +10,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
 
 
+import AjoutOrdinateurModal from './components/modalAjoutOrdi';
+
 export default class Home extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +28,7 @@ export default class Home extends Component {
          */
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
+        this.getAddOrdi       = this.getAddOrdi.bind(this);
     }
 
     componentDidMount() {
@@ -35,6 +38,9 @@ export default class Home extends Component {
     async getAttribution() {
         try {
             this.setState({ ordinateurs: [] });
+            this.setState({ paginationLink: {} });
+            this.setState({ totalPage: null });
+
             const allInformation = await Axios.get('/api/computers', {
                 params: {
                     date: this.state.currentDate,
@@ -61,13 +67,19 @@ export default class Home extends Component {
         await this.getAttribution();
     }
 
+    getAddOrdi(childData) {
+        if(childData) {
+            this.getAttribution();
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
                 
                 <Navigation />
 
-                <div className="marginDate">
+                <div className="marginDate alignElement">
                     <MuiPickersUtilsProvider utils={DateFnsUtils} >
                         <KeyboardDatePicker
                             disableToolbar
@@ -82,8 +94,11 @@ export default class Home extends Component {
                             }}
                         />
                     </MuiPickersUtilsProvider>
+
+                    <AjoutOrdinateurModal ajoutOrdi={this.getAddOrdi} />
                 </div>
 
+                
                 <div className="pagination">
                     <Pagination count={this.state.totalPage} size="small" onChange={this.handleChangePage} />
                 </div>

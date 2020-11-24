@@ -72,3 +72,40 @@ header {
 .marginDate {
     margin-left: 80px;
 }
+
+.alignElement {
+    display:  flex;
+    align-items: center;
+}
+
+.modalStyle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formStyle {
+    background-color: white;
+    width: 400px;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+.formInput {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formInput input {
+    width: 90%;
+    padding: 5px 15px;
+    margin: 0 auto;
+    
+}
+
+.formInput button {
+    margin-top: 10px;
+}
