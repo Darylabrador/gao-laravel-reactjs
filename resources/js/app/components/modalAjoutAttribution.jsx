@@ -4,31 +4,54 @@ import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
+
 export default class AjoutAttributionModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: "",
+            desktop_id: this.props.desktop_id,
+            client_id: null,
+            hours: this.props.hours,
+            date: this.props.date,
+            attributeInfo: {},
+            defaultProps: {
+                options: [],
+                getOptionLabel: (option) => `${option.name} ${option.surname}`,
+            },
             open: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.handleSelect = this.handleSelect.bind(this);
+        
     }
 
-    async handleChange(event) {
-        await this.setState({ name: event.target.value });
+    async handleChange(event, value) {
+        let client       = event.target.value;
+        let clientLength = client.length;
+
+        if(clientLength > 2) {
+            const clientData   = await Axios.post('/api/client/search', { clientInfo: client});
+            const responseData = clientData.data.data;
+            await this.setState({ defaultProps: {...this.state.defaultProps, options: responseData}});
+        }   
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        let dataSend = {
-            name: this.state.name
-        };
-        await Axios.post('/api/computers', dataSend)
-        this.props.ajoutOrdi(true);
-        await this.setState({ name: "" });
+        const attributionData = await Axios.post('/api/computers/attributions', {
+            desktop_id: this.state.desktop_id,
+            client_id: this.state.attributeInfo.id,
+            hours: this.state.hours,
+            date: this.state.date
+        })
+        const responseData = attributionData.data.data;
+        await this.props.getAddAttributions(responseData);
+        await this.setState({ open: false });
     }
 
     async handleOpen() {
@@ -38,6 +61,10 @@ export default class AjoutAttributionModal extends Component {
     async handleClose() {
         await this.setState({ open: false })
     };
+
+    async handleSelect(event, value) {
+        await this.setState({ attributeInfo: value });
+    }
 
     render() {
         return (
@@ -54,8 +81,17 @@ export default class AjoutAttributionModal extends Component {
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Attribuer</h3>
                         <div className="formInput">
-                            <input type="text" placeholder="Nom du poste" value={this.state.name} onChange={this.handleChange} />
-                            <Button type="submit" variant="contained" color="primary">Ajouter</Button>
+                            <Autocomplete
+                                className="autoCompleteStyle"
+                                {...this.state.defaultProps}
+                                id="auto-complete"
+                                autoComplete
+                                includeInputInList
+                                onKeyUp={this.handleChange}
+                                onChange={this.handleSelect}
+                                renderInput={(params) => <TextField {...params} label="Le client" margin="normal" />}
+                            />
+                            <Button type="submit" variant="contained" color="primary">Attribuer</Button>
                         </div>
                     </form>
                 </Modal>

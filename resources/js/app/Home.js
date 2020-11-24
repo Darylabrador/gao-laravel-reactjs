@@ -114,7 +114,7 @@ export default class Home extends Component {
                 <Grid container spacing={3} justify="space-around" id="cardContainer">
                     {this.state.ordinateurs.map((ordi, index) => (
                         <Grid item xs={12} sm={3} >
-                            <Ordinateur key={index} ordinateur={ordi} deleteOrdi={this.getDeleteOrdi}  />
+                            <Ordinateur key={index} ordinateur={ordi} deleteOrdi={this.getDeleteOrdi} date={this.state.currentDate} />
                         </Grid>
                     ))}
                 </Grid>

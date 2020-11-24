@@ -20,15 +20,18 @@ export default class OrdinateurCard extends Component {
         this.state = {
             attributions: {},
             timeslots: [],
+            date: this.props.date
         }
         this.getDeleteOrdi     = this.getDeleteOrdi.bind(this);
         this.getSupAttribution = this.getSupAttribution.bind(this);
+        this.getAddAttributions = this.getAddAttributions.bind(this);
     }
 
     componentDidMount() {
         this.initialize()
         this.displayHoraire()
     }
+
 
     initialize() {
         var attributionInfo = this.props.ordinateur.attributions;
@@ -44,8 +47,8 @@ export default class OrdinateurCard extends Component {
         }
     }
 
-    displayHoraire() {
-        this.setState({timeslots: []});
+    async displayHoraire() {
+        await this.setState({timeslots: []});
         let arrayData = {};
         let arrayDataFormatted = [];
 
@@ -64,7 +67,7 @@ export default class OrdinateurCard extends Component {
                 arrayDataFormatted.push(arrayData)
             }
         }
-        this.setState({timeslots: arrayDataFormatted})
+        await this.setState({timeslots: arrayDataFormatted})
     }
 
     async getSupAttribution(idAssign){
@@ -84,6 +87,16 @@ export default class OrdinateurCard extends Component {
         this.displayHoraire();
     }
 
+    async getAddAttributions(attributions) {
+        this.state.attributions[attributions.hours] = {
+            id: attributions.client.id,
+            surname: attributions.client.surname,
+            name: attributions.client.name,
+            idAssign: attributions.idAssign
+        }
+        await this.initialize()
+        await this.displayHoraire()
+    }
 
     getDeleteOrdi(childData) {
         if (childData) {
@@ -119,7 +132,7 @@ export default class OrdinateurCard extends Component {
                                                 <Button>
                                                { data.client != ""
                                                         ? <SuppAttributionModal suppAttribution={this.getSupAttribution} idAssign={data.client.idAssign} />
-                                                        : <AjoutAttributionModal/>
+                                                        : <AjoutAttributionModal desktop_id={this.props.ordinateur.id} hours={data.hours} date={this.state.date} getAddAttributions={this.getAddAttributions} />
                                                }
                                                 </Button>
                                             </TableCell>

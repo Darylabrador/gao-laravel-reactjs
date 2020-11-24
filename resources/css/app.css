@@ -99,7 +99,7 @@ header {
     width: 100%;
 }
 
-.formInput input {
+.formInput input, .autoCompleteStyle {
     width: 90%;
     padding: 5px 15px;
     margin: 0 auto;
