@@ -29,6 +29,8 @@ export default class Home extends Component {
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.getAddOrdi       = this.getAddOrdi.bind(this);
+        this.getDeleteOrdi    = this.getDeleteOrdi.bind(this);
+        
     }
 
     componentDidMount() {
@@ -73,6 +75,12 @@ export default class Home extends Component {
         }
     }
 
+    getDeleteOrdi(childData) {
+        if (childData) {
+            this.getAttribution();
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -106,7 +114,7 @@ export default class Home extends Component {
                 <Grid container spacing={3} justify="space-around" id="cardContainer">
                     {this.state.ordinateurs.map((ordi, index) => (
                         <Grid item xs={12} sm={3} >
-                            <Ordinateur key={index} ordinateur={ordi} />
+                            <Ordinateur key={index} ordinateur={ordi} deleteOrdi={this.getDeleteOrdi}  />
                         </Grid>
                     ))}
                 </Grid>

@@ -13,6 +13,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 
+import SuppOrdiModal from './modalSuppOrdi';
+
+
 export default class OrdinateurCard extends Component {
     constructor(props) {
         super(props);
@@ -20,6 +23,7 @@ export default class OrdinateurCard extends Component {
             attributions: {},
             timeslots: [],
         }
+        this.getDeleteOrdi = this.getDeleteOrdi.bind(this);
     }
 
     componentDidMount() {
@@ -64,6 +68,13 @@ export default class OrdinateurCard extends Component {
         this.setState({timeslots: arrayDataFormatted})
     }
 
+
+    getDeleteOrdi(childData) {
+        if (childData) {
+            this.props.deleteOrdi(childData);
+        }
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -76,9 +87,7 @@ export default class OrdinateurCard extends Component {
                                 </Typography>
                             </div>
                             <div>
-                                <Button>
-                                    <DeleteIcon className="redFont" />
-                                </Button>
+                                <SuppOrdiModal suppOrdi={this.getDeleteOrdi} idOrdi={this.props.ordinateur.id} />
                             </div>
                         </div>
 

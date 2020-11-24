@@ -26,7 +26,7 @@ export default class AjoutOrdinateurModal extends Component {
         let dataSend = {
             name: this.state.name
         };
-        const addDesktop = await Axios.post('/api/computers', dataSend)
+        await Axios.post('/api/computers', dataSend)
         this.props.ajoutOrdi(true);
         await this.setState({ name: ""});
     }
