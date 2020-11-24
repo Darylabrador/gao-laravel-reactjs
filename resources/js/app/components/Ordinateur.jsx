@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
 import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,7 +11,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
 
 import SuppOrdiModal from './modalSuppOrdi';
-
+import SuppAttributionModal from './modalSuppAttribution';
+import AjoutAttributionModal from './modalAjoutAttribution';
 
 export default class OrdinateurCard extends Component {
     constructor(props) {
@@ -23,7 +21,8 @@ export default class OrdinateurCard extends Component {
             attributions: {},
             timeslots: [],
         }
-        this.getDeleteOrdi = this.getDeleteOrdi.bind(this);
+        this.getDeleteOrdi     = this.getDeleteOrdi.bind(this);
+        this.getSupAttribution = this.getSupAttribution.bind(this);
     }
 
     componentDidMount() {
@@ -68,12 +67,30 @@ export default class OrdinateurCard extends Component {
         this.setState({timeslots: arrayDataFormatted})
     }
 
+    async getSupAttribution(idAssign){
+        await this.setState({ attributions: {}});
+       
+        const refreshDeleteData = this.state.timeslots.filter(element => element.client.idAssign != idAssign);
+        refreshDeleteData.forEach(element => {
+            if (element.client.id) {
+                this.state.attributions[element.hours] = {
+                    id: element.client.id,
+                    surname: element.client.surname,
+                    name: element.client.name,
+                    idAssign: element.client.idAssign
+                }
+            }
+        });
+        this.displayHoraire();
+    }
+
 
     getDeleteOrdi(childData) {
         if (childData) {
             this.props.deleteOrdi(childData);
         }
     }
+
 
     render() {
         return (
@@ -100,10 +117,10 @@ export default class OrdinateurCard extends Component {
                                             <TableCell align="center">{data.client.surname} {data.client.name}</TableCell>
                                             <TableCell align="right">
                                                 <Button>
-                                                    <DeleteIcon size="small" className="redFont btnStyle" />
-                                                </Button>
-                                                <Button>
-                                                    <AddCircleOutlineIcon size="small" className="greenFont btnStyle" />
+                                               { data.client != ""
+                                                        ? <SuppAttributionModal suppAttribution={this.getSupAttribution} idAssign={data.client.idAssign} />
+                                                        : <AjoutAttributionModal/>
+                                               }
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
