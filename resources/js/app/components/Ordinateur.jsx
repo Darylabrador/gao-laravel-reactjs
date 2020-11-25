@@ -27,12 +27,13 @@ export default class OrdinateurCard extends Component {
         this.getAddAttributions = this.getAddAttributions.bind(this);
     }
 
+    
     componentDidMount() {
         this.initialize()
         this.displayHoraire()
     }
 
-
+    
     initialize() {
         var attributionInfo = this.props.ordinateur.attributions;
         if (attributionInfo.length != 0) {
@@ -141,7 +142,6 @@ export default class OrdinateurCard extends Component {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-
                     </CardContent>
                 </Card>
             </React.Fragment>

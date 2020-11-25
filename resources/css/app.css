@@ -100,12 +100,52 @@ header {
 }
 
 .formInput input, .autoCompleteStyle {
-    width: 90%;
+    width: 80%;
     padding: 5px 15px;
     margin: 0 auto;
-    
 }
 
-.formInput button {
+.formInput button, .btnStyleAttribution {
     margin-top: 10px;
+}
+
+.formAutocomplete {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80vh;
+}
+
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 25px;
+    background-color: rgb(175, 175, 175);
+    border-radius: 20px;
+}
+
+.loginForm h3 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.loginInput {
+    width: 350px;
+}
+
+.btnLogin {
+    margin-top: 15px !important;
+}
+
+.btnLoginContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }

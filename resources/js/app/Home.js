@@ -1,9 +1,11 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
-import Navigation from './components/Navigation';
 import Ordinateur from './components/Ordinateur';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
+import { BrowserRouter as Router, Route, Link, Redirect, Switch } from 'react-router-dom';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Button from '@material-ui/core/Button';
 
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
@@ -11,6 +13,7 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers
 
 
 import AjoutOrdinateurModal from './components/modalAjoutOrdi';
+import Login from './Login';
 
 export default class Home extends Component {
     constructor(props) {
@@ -20,7 +23,9 @@ export default class Home extends Component {
             currentDate: new Date().toISOString().substr(0, 10),
             currentPage: 1,
             paginationLink: {},
-            totalPage: null
+            totalPage: null,
+            token: null,
+            isAuth: false
         }
 
         /**
@@ -81,11 +86,22 @@ export default class Home extends Component {
         }
     }
 
+    logout() {
+        localStorage.clear();
+        location.href = '/login';
+    }
+    
     render() {
         return (
             <React.Fragment>
-                
-                <Navigation />
+                <Router>
+                    <header>
+                        <Link to="/" id="btnWelcome" className="whiteFont">  Gestion ordinateur </Link>
+                        <Button onClick={this.logout}>
+                            <ExitToAppIcon className="whiteFont" />
+                        </Button>
+                    </header>
+                </Router>
 
                 <div className="marginDate alignElement">
                     <MuiPickersUtilsProvider utils={DateFnsUtils} >

@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
+import AjoutClientModal from './modalAddClient';
 
 export default class AjoutAttributionModal extends Component {
     constructor(props) {
@@ -20,14 +21,14 @@ export default class AjoutAttributionModal extends Component {
                 options: [],
                 getOptionLabel: (option) => `${option.name} ${option.surname}`,
             },
-            open: false
+            open: false,
+           
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
-        
     }
 
     async handleChange(event, value) {
@@ -38,6 +39,7 @@ export default class AjoutAttributionModal extends Component {
             const clientData   = await Axios.post('/api/client/search', { clientInfo: client});
             const responseData = clientData.data.data;
             await this.setState({ defaultProps: {...this.state.defaultProps, options: responseData}});
+            console.log(clientLength)
         }   
     }
 
@@ -58,7 +60,7 @@ export default class AjoutAttributionModal extends Component {
         await this.setState({ open: true })
     };
 
-    async handleClose() {
+    async handleClose(close) {
         await this.setState({ open: false })
     };
 
@@ -81,16 +83,23 @@ export default class AjoutAttributionModal extends Component {
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Attribuer</h3>
                         <div className="formInput">
-                            <Autocomplete
-                                className="autoCompleteStyle"
-                                {...this.state.defaultProps}
-                                id="auto-complete"
-                                autoComplete
-                                includeInputInList
-                                onKeyUp={this.handleChange}
-                                onChange={this.handleSelect}
-                                renderInput={(params) => <TextField {...params} label="Le client" margin="normal" />}
-                            />
+                            <div className="formAutocomplete">
+                                <Autocomplete
+                                    className="autoCompleteStyle"
+                                    {...this.state.defaultProps}
+                                    id="auto-complete"
+                                    autoComplete
+                                    includeInputInList
+                                    onKeyUp={this.handleChange}
+                                    onChange={this.handleSelect}
+                                    renderInput={(params) => <TextField {...params} label="Le client" margin="normal" />}
+                                />
+
+                                <div className="btnStyleAttribution">
+                                    <AjoutClientModal desktop_id={this.state.desktop_id} hours={this.state.hours} date={this.state.date} closeModal={this.handleClose} />
+                                </div>
+                            </div>
+                           
                             <Button type="submit" variant="contained" color="primary">Attribuer</Button>
                         </div>
                     </form>
