@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import AjoutClientModal from './modalAddClient';
+import { getToken } from '../services/tokenConfig';
 
 export default class AjoutAttributionModal extends Component {
     constructor(props) {
@@ -36,10 +37,13 @@ export default class AjoutAttributionModal extends Component {
         let clientLength = client.length;
 
         if(clientLength > 2) {
-            const clientData   = await Axios.post('/api/client/search', { clientInfo: client});
+            const clientData   = await Axios.post('/api/client/search', { clientInfo: client}, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
             const responseData = clientData.data.data;
             await this.setState({ defaultProps: {...this.state.defaultProps, options: responseData}});
-            console.log(clientLength)
         }   
     }
 
@@ -50,6 +54,10 @@ export default class AjoutAttributionModal extends Component {
             client_id: this.state.attributeInfo.id,
             hours: this.state.hours,
             date: this.state.date
+        },{
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
         })
         const responseData = attributionData.data.data;
         await this.props.getAddAttributions(responseData);

@@ -1,8 +1,8 @@
 import Axios from 'axios';
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
+import { setToken } from './services/tokenConfig';
 
 export default class Login extends Component {
 
@@ -11,7 +11,6 @@ export default class Login extends Component {
         this.state = {
             email: "",
             password: "",
-            redirect: false
         }
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangePassword = this.handleChangePassword.bind(this);
@@ -33,10 +32,8 @@ export default class Login extends Component {
             password: this.state.password
         });
         let responseData = LoginData.data;
-        console.log(responseData);
-
-        if (responseData.success) {
-            localStorage.setItem('token', responseData.token);
+            if (responseData.success) {
+            setToken(responseData.token);
             location.href = '/';
             await this.setState({ email: "", password: "" });
         } else {

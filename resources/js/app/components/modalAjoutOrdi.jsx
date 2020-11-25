@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
+import { getToken } from '../services/tokenConfig';
 
 export default class AjoutOrdinateurModal extends Component {
     constructor(props) {
@@ -26,7 +27,11 @@ export default class AjoutOrdinateurModal extends Component {
         let dataSend = {
             name: this.state.name
         };
-        await Axios.post('/api/computers', dataSend)
+        await Axios.post('/api/computers', dataSend, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
         this.props.ajoutOrdi(true);
         await this.setState({ name: ""});
     }

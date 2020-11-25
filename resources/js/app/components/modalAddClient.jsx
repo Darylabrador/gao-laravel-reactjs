@@ -1,8 +1,8 @@
-import Axios from 'axios';
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
+import { getToken } from '../services/tokenConfig';
 
 export default class AjoutClientModal extends Component {
     constructor(props) {

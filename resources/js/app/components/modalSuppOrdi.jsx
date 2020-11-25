@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { getToken } from '../services/tokenConfig';
+
 
 export default class SuppOrdiModal extends Component {
     constructor(props) {
@@ -18,7 +20,11 @@ export default class SuppOrdiModal extends Component {
 
     async handleSubmit(event) {
         event.preventDefault();
-        await Axios.delete(`/api/computers/${this.state.idOrdi}`)
+        await Axios.delete(`/api/computers/${this.state.idOrdi}`, {
+            headers: {
+                Authorization: `Bearer ${getToken()}`
+            }
+        })
         this.props.suppOrdi(true);
     }
 

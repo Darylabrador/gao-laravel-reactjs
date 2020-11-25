@@ -10,10 +10,9 @@ import Button from '@material-ui/core/Button';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers';
-
-
 import AjoutOrdinateurModal from './components/modalAjoutOrdi';
-import Login from './Login';
+
+import { getToken, removeToken } from './services/tokenConfig';
 
 export default class Home extends Component {
     constructor(props) {
@@ -24,7 +23,6 @@ export default class Home extends Component {
             currentPage: 1,
             paginationLink: {},
             totalPage: null,
-            token: null,
             isAuth: false
         }
 
@@ -39,6 +37,7 @@ export default class Home extends Component {
     }
 
     componentDidMount() {
+  
         this.getAttribution();
     }
 
@@ -52,6 +51,9 @@ export default class Home extends Component {
                 params: {
                     date: this.state.currentDate,
                     page: this.state.currentPage
+                },
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
                 }
             });
             const responseData = allInformation.data;
@@ -87,7 +89,7 @@ export default class Home extends Component {
     }
 
     logout() {
-        localStorage.clear();
+        removeToken();
         location.href = '/login';
     }
     
