@@ -22,14 +22,29 @@ export default class AjoutClientModal extends Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+
+    /**
+     * handle the update value for name state
+     * @param {*} event 
+     */
     async handleChangeName(event) {
         await this.setState({ name: event.target.value });
     }
 
+
+    /**
+     * handle the update value for surname state
+     * @param {*} event 
+     */
     async handleChangeSurname(event) {
         await this.setState({ surname: event.target.value });
     }
 
+
+    /**
+     * handle add client and set assign at same time
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         await console.log(this.state.name)
@@ -39,14 +54,26 @@ export default class AjoutClientModal extends Component {
  
     }
 
+
+    /**
+     * handle open modal
+     */
     async handleOpen() {
         await this.setState({ open: true })
     };
 
+
+    /**
+     * handle close modal
+     */
     async handleClose() {
         await this.setState({ open: false })
     };
 
+
+    /**
+     * render add client modal
+     */
     render() {
         return (
             <div>

@@ -32,6 +32,12 @@ export default class AjoutAttributionModal extends Component {
         this.handleSelect = this.handleSelect.bind(this);
     }
 
+
+    /**
+     * create object array for autocomplete
+     * @param {*} event 
+     * @param {*} value 
+     */
     async handleChange(event, value) {
         let client       = event.target.value;
         let clientLength = client.length;
@@ -47,6 +53,11 @@ export default class AjoutAttributionModal extends Component {
         }   
     }
 
+
+    /**
+     * Set an assign information
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         const attributionData = await Axios.post('/api/computers/attributions', {
@@ -64,18 +75,37 @@ export default class AjoutAttributionModal extends Component {
         await this.setState({ open: false });
     }
 
+
+    /**
+     * handle open modal
+     */
     async handleOpen() {
         await this.setState({ open: true })
     };
 
+
+    /**
+     * handle close modal
+     * @param {*} close 
+     */
     async handleClose(close) {
         await this.setState({ open: false })
     };
 
+
+    /**
+     * Handle selected object value
+     * @param {*} event 
+     * @param {*} value 
+     */
     async handleSelect(event, value) {
         await this.setState({ attributeInfo: value });
     }
 
+
+    /**
+     * render the assign modal
+     */
     render() {
         return (
             <div>

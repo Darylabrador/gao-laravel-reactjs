@@ -17,10 +17,11 @@ export default class SuppAttributionModal extends Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
-    async handleChange(event) {
-        await this.setState({ name: event.target.value });
-    }
 
+    /**
+     * Handle deleted assign information in database
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         await Axios.delete(`/api/computers/attributions/${this.state.idAssign}`, {
@@ -32,14 +33,26 @@ export default class SuppAttributionModal extends Component {
         await this.setState({ open: false })
     }
 
+
+    /**
+     * handle open modal
+     */
     async handleOpen() {
         await this.setState({ open: true })
     };
 
+
+    /**
+     * handle close modal
+     */
     async handleClose() {
         await this.setState({ open: false })
     };
 
+
+    /**
+     * render delete assign information
+     */
     render() {
         return (
             <div>

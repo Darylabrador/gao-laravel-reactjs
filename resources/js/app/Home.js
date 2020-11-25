@@ -36,11 +36,18 @@ export default class Home extends Component {
         
     }
 
+
+    /**
+     * At the start, get all data
+     */
     componentDidMount() {
-  
         this.getAttribution();
     }
 
+
+    /**
+     * Function to get all data needed
+     */
     async getAttribution() {
         try {
             this.setState({ ordinateurs: [] });
@@ -66,33 +73,63 @@ export default class Home extends Component {
         } 
     }
 
+
+    /**
+     * Handle the page change
+     * @param {*} event 
+     * @param {*} value 
+     */
     async handleChangePage(event, value){
         await this.setState({ currentPage: value });
         await this.getAttribution();
     }
 
+
+    /**
+     * Handle the date change
+     * @param {*} event 
+     * @param {*} value 
+     */
     async handleDateChange(event, value){
         await this.setState({ currentDate: value });
         await this.getAttribution();
     }
 
+
+    /**
+     * handle added desktop information
+     * @param {*} childData 
+     */
     getAddOrdi(childData) {
         if(childData) {
             this.getAttribution();
         }
     }
 
+
+    /**
+     * handle deleted desktop information
+     * @param {*} childData 
+     */
     getDeleteOrdi(childData) {
         if (childData) {
             this.getAttribution();
         }
     }
 
+
+    /**
+     * handle the user's logout
+     */
     logout() {
         removeToken();
         location.href = '/login';
     }
     
+
+    /**
+     * Render the home component
+     */
     render() {
         return (
             <React.Fragment>

@@ -18,10 +18,20 @@ export default class AjoutOrdinateurModal extends Component {
         this.handleClose  = this.handleClose.bind(this);
     }
 
+
+    /**
+     * Handle the change on name input
+     * @param {*} event 
+     */
     async handleChange(event) { 
        await this.setState({ name: event.target.value }); 
     }
 
+
+    /**
+     * handle the create desktop information
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         let dataSend = {
@@ -36,14 +46,25 @@ export default class AjoutOrdinateurModal extends Component {
         await this.setState({ name: ""});
     }
 
+    /**
+     * Handle open modal
+     */
     async handleOpen() {
         await this.setState({ open: true })
     };
 
+
+    /**
+     * handle close modal
+     */
     async handleClose() {
         await this.setState({open: false})
     };
 
+
+    /**
+     * render add desktop modal
+     */
     render() {
         return (
             <div>

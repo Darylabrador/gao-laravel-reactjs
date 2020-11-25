@@ -18,6 +18,11 @@ export default class SuppOrdiModal extends Component {
         this.handleClose = this.handleClose.bind(this);
     }
 
+    
+    /**
+     * Handle deleted desktop in database
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         await Axios.delete(`/api/computers/${this.state.idOrdi}`, {
@@ -28,15 +33,26 @@ export default class SuppOrdiModal extends Component {
         this.props.suppOrdi(true);
     }
 
+
+    /**
+     * handle open modal
+     */
     async handleOpen() {
         await this.setState({ open: true })
     };
 
+
+    /**
+     * handle close modal
+     */
     async handleClose() {
         await this.setState({ open: false })
     };
 
 
+    /**
+     * render modal delete desktop
+     */
     render() {
         return (
             <div>

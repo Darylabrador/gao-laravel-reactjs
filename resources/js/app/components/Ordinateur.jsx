@@ -27,13 +27,16 @@ export default class OrdinateurCard extends Component {
         this.getAddAttributions = this.getAddAttributions.bind(this);
     }
 
-    
+
     componentDidMount() {
         this.initialize()
         this.displayHoraire()
     }
 
     
+    /**
+     * Create assign array (associative array)
+     */
     initialize() {
         var attributionInfo = this.props.ordinateur.attributions;
         if (attributionInfo.length != 0) {
@@ -48,6 +51,10 @@ export default class OrdinateurCard extends Component {
         }
     }
 
+
+    /**
+     * Create timeslot array
+     */
     async displayHoraire() {
         await this.setState({timeslots: []});
         let arrayData = {};
@@ -71,9 +78,13 @@ export default class OrdinateurCard extends Component {
         await this.setState({timeslots: arrayDataFormatted})
     }
 
+
+    /**
+     * Refresh assign array with deleted assign information
+     * @param {*} idAssign 
+     */
     async getSupAttribution(idAssign){
         await this.setState({ attributions: {}});
-       
         const refreshDeleteData = this.state.timeslots.filter(element => element.client.idAssign != idAssign);
         refreshDeleteData.forEach(element => {
             if (element.client.id) {
@@ -88,6 +99,11 @@ export default class OrdinateurCard extends Component {
         this.displayHoraire();
     }
 
+
+    /**
+     * Create assign array
+     * @param {*} attributions 
+     */
     async getAddAttributions(attributions) {
         this.state.attributions[attributions.hours] = {
             id: attributions.client.id,
@@ -99,6 +115,11 @@ export default class OrdinateurCard extends Component {
         await this.displayHoraire()
     }
 
+
+    /**
+     * Send deleted desktop information to parent component (home)
+     * @param {*} childData 
+     */
     getDeleteOrdi(childData) {
         if (childData) {
             this.props.deleteOrdi(childData);
@@ -106,6 +127,9 @@ export default class OrdinateurCard extends Component {
     }
 
 
+    /**
+     * Render ordinateur component
+     */
     render() {
         return (
             <React.Fragment>

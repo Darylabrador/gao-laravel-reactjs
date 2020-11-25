@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import { setToken } from './services/tokenConfig';
 
 export default class Login extends Component {
-
     constructor(props) {
         super(props)
         this.state = {
@@ -17,14 +16,29 @@ export default class Login extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+
+    /**
+     * Set email value in state
+     * @param {*} event 
+     */
     async handleChangeEmail(event) {
         await this.setState({ email: event.target.value });
     }
 
+
+    /**
+     * Set password value in state
+     * @param {*} event 
+     */
     async handleChangePassword(event) {
         await this.setState({ password: event.target.value });
     }
 
+
+    /**
+     * handle the submit form and log the user
+     * @param {*} event 
+     */
     async handleSubmit(event) {
         event.preventDefault();
         const LoginData = await Axios.post('/api/login', {
@@ -37,11 +51,14 @@ export default class Login extends Component {
             location.href = '/';
             await this.setState({ email: "", password: "" });
         } else {
-            
+            alert(responseData.message)
         }
-
     }
 
+
+    /**
+    * Render the login component
+    */
     render() {
         return (
             <div className="loginContainer">
