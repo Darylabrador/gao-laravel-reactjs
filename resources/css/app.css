@@ -159,4 +159,6 @@ header {
     margin: 0 5px !important;
 }
 
-
+.flexButton {
+    display: flex;
+}

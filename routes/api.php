@@ -32,5 +32,6 @@ Route::middleware('auth:api')->group(function() {
     Route::post('/client/attributions', [ClientController::class, 'createClient']);
     Route::post('/computers/attributions', [AssignController::class, 'setAttribution']);
     Route::delete('/computers/attributions/{id}', [AssignController::class, 'deleteAttribution']);
+    Route::put('/computers/{id}', [DesktopController::class, 'updateDesktop']);
     Route::delete('/computers/{id}', [DesktopController::class, 'deleteDesktop']);
 });

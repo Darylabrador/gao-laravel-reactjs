@@ -13,6 +13,7 @@ import TableRow from '@material-ui/core/TableRow';
 import SuppOrdiModal from './modalSuppOrdi';
 import SuppAttributionModal from './modalSuppAttribution';
 import AjoutAttributionModal from './modalAjoutAttribution';
+import ModifOrdiModal from './modalModifOrdi';
 
 export default class OrdinateurCard extends Component {
     constructor(props) {
@@ -25,7 +26,7 @@ export default class OrdinateurCard extends Component {
         this.getDeleteOrdi     = this.getDeleteOrdi.bind(this);
         this.getSupAttribution = this.getSupAttribution.bind(this);
         this.getAddAttributions = this.getAddAttributions.bind(this);
-
+        this.updateOrdi         = this.updateOrdi.bind(this);
     }
 
 
@@ -129,6 +130,9 @@ export default class OrdinateurCard extends Component {
         }
     }
 
+    updateOrdi() {
+        this.props.updateOrdi();
+    }
     /**
      * Render ordinateur component
      */
@@ -143,7 +147,8 @@ export default class OrdinateurCard extends Component {
                                     {this.props.ordinateur.name}
                                 </Typography>
                             </div>
-                            <div>
+                            <div className="flexButton">
+                                <ModifOrdiModal idOrdi={this.props.ordinateur.id} updateOrdi={this.updateOrdi} />
                                 <SuppOrdiModal suppOrdi={this.getDeleteOrdi} idOrdi={this.props.ordinateur.id}  />
                             </div>
                         </div>
