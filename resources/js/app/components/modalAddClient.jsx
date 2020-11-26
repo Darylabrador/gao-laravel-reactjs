@@ -94,6 +94,7 @@ export default class AjoutClientModal extends Component {
      */
     async handleClose() {
         await this.setState({ open: false })
+        await this.props.closeModal();
     };
 
 
@@ -112,7 +113,7 @@ export default class AjoutClientModal extends Component {
                     onClose={this.handleClose}
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
-                    className="modalStyle"
+                    className="modalStyleClient"
                 >
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Ajouter un client</h3>

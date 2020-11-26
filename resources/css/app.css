@@ -78,10 +78,15 @@ header {
     align-items: center;
 }
 
-.modalStyle {
+.modalStyle, .modalStyleClient {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.modalStyleClient input {
+    margin: 10px 0 !important;
+    width: 90% !important;
 }
 
 .formStyle {
@@ -153,3 +158,5 @@ header {
 .btnSpace {
     margin: 0 5px !important;
 }
+
+
