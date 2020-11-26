@@ -137,8 +137,10 @@ export default class AjoutAttributionModal extends Component {
                                     <AjoutClientModal desktop_id={this.state.desktop_id} hours={this.state.hours} date={this.state.date} closeModal={this.handleClose} />
                                 </div>
                             </div>
-                           
-                            <Button type="submit" variant="contained" color="primary">Attribuer</Button>
+                            <div>
+                                <Button variant="contained" color="default" onClick={this.handleClose} className="btnSpace">Annuler</Button>
+                                <Button type="submit" variant="contained" color="primary" className="btnSpace">Attribuer</Button>
+                            </div>
                         </div>
                     </form>
                 </Modal>

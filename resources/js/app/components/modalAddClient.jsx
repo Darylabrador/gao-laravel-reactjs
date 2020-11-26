@@ -93,7 +93,10 @@ export default class AjoutClientModal extends Component {
                         <div className="formInput">
                             <input type="text" placeholder="Nom du client" value={this.state.name} onChange={this.handleChangeName} />
                             <input type="text" placeholder="Prénom du client" value={this.state.surname} onChange={this.handleChangeSurname} />
-                            <Button type="submit" variant="contained" color="primary">Ajouter</Button>
+                            <div className="btnSpaceTop">
+                                <Button variant="contained" color="default" onClick={this.handleClose} className="btnSpace">Annuler</Button>
+                                <Button type="submit" variant="contained" color="primary" className="btnSpace">Ajouter</Button>
+                            </div>
                         </div>
                     </form>
                 </Modal>

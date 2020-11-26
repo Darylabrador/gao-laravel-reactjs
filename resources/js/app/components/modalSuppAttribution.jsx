@@ -68,7 +68,10 @@ export default class SuppAttributionModal extends Component {
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Voulez vous vraiment annuler cette attribution ?</h3>
                         <div className="formInput">
-                            <Button type="submit" variant="contained" color="secondary">Oui</Button>
+                            <div>
+                                <Button variant="contained" color="primary" onClick={this.handleClose} className="btnSpace">Non</Button>
+                                <Button type="submit" variant="contained" color="secondary" className="btnSpace">Oui</Button>
+                            </div>
                         </div>
                     </form>
                 </Modal>

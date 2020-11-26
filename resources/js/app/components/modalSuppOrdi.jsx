@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { getToken } from '../services/tokenConfig';
-
+import { makeStyles } from '@material-ui/core/styles';
 
 export default class SuppOrdiModal extends Component {
     constructor(props) {
@@ -54,6 +54,7 @@ export default class SuppOrdiModal extends Component {
      * render modal delete desktop
      */
     render() {
+
         return (
             <div>
                 <Button>
@@ -70,7 +71,10 @@ export default class SuppOrdiModal extends Component {
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Voulez vous vraiment supprimer ce poste ?</h3>
                         <div className="formInput">
-                            <Button type="submit" variant="contained" color="secondary">Oui</Button>
+                            <div>
+                                <Button variant="contained" color="primary" onClick={this.handleClose} className="btnSpace">Non</Button>
+                                <Button type="submit" variant="contained" color="secondary" className="btnSpace">Oui</Button>
+                            </div>
                         </div>
                     </form>
                 </Modal>

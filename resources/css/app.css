@@ -105,8 +105,8 @@ header {
     margin: 0 auto;
 }
 
-.formInput button, .btnStyleAttribution {
-    margin-top: 10px;
+.formInput button, .btnStyleAttribution, .btnSpaceTop {
+    margin-top: 10px !important;
 }
 
 .formAutocomplete {
@@ -148,4 +148,8 @@ header {
     width: 100%;
     display: flex;
     justify-content: flex-end;
+}
+
+.btnSpace {
+    margin: 0 5px !important;
 }

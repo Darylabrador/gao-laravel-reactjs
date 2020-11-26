@@ -83,7 +83,10 @@ export default class AjoutOrdinateurModal extends Component {
                         <h3>Ajouter un ordinateur</h3>
                         <div className="formInput">
                             <input type="text" placeholder="Nom du poste" value={this.state.name} onChange={this.handleChange} />
-                            <Button type="submit" variant="contained" color="primary">Ajouter</Button>
+                            <div>
+                                <Button variant="contained" color="default" onClick={this.handleClose} className="btnSpace">Annuler</Button>
+                                <Button type="submit" variant="contained" color="primary" className="btnSpace">Ajouter</Button>
+                            </div>
                         </div>
                     </form>
                 </Modal>
