@@ -13,6 +13,8 @@ import { MuiPickersUtilsProvider, KeyboardDatePicker} from '@material-ui/pickers
 import AjoutOrdinateurModal from './components/modalAjoutOrdi';
 
 import { getToken, removeToken } from './services/tokenConfig';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default class Home extends Component {
     constructor(props) {
@@ -40,8 +42,8 @@ export default class Home extends Component {
     /**
      * At the start, get all data
      */
-    componentDidMount() {
-        this.getAttribution();
+    async componentDidMount() {
+        await this.getAttribution();
     }
 
 
@@ -50,9 +52,9 @@ export default class Home extends Component {
      */
     async getAttribution() {
         try {
-            this.setState({ ordinateurs: [] });
-            this.setState({ paginationLink: {} });
-            this.setState({ totalPage: null });
+            await this.setState({ ordinateurs: [] });
+            await this.setState({ paginationLink: {} });
+            await this.setState({ totalPage: null });
 
             const allInformation = await Axios.get('/api/computers', {
                 params: {
@@ -65,9 +67,9 @@ export default class Home extends Component {
             });
             const responseData = allInformation.data;
             let now = Math.ceil(responseData.meta.total / 3);
-            this.setState({ ordinateurs: responseData.data });
-            this.setState({ paginationLink: responseData.links });
-            this.setState({ totalPage: now });
+            await this.setState({ ordinateurs: responseData.data });
+            await this.setState({ paginationLink: responseData.links });
+            await this.setState({ totalPage: now });
         } catch (error) {
             console.error(error)
         } 
@@ -100,9 +102,9 @@ export default class Home extends Component {
      * handle added desktop information
      * @param {*} childData 
      */
-    getAddOrdi(childData) {
+    async getAddOrdi(childData) {
         if(childData) {
-            this.getAttribution();
+            await this.getAttribution();
         }
     }
 
@@ -111,9 +113,9 @@ export default class Home extends Component {
      * handle deleted desktop information
      * @param {*} childData 
      */
-    getDeleteOrdi(childData) {
+    async getDeleteOrdi(childData) {
         if (childData) {
-            this.getAttribution();
+           await this.getAttribution();
         }
     }
 
@@ -126,7 +128,7 @@ export default class Home extends Component {
         location.href = '/login';
     }
     
-
+    
     /**
      * Render the home component
      */
@@ -141,6 +143,18 @@ export default class Home extends Component {
                         </Button>
                     </header>
                 </Router>
+
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                />
 
                 <div className="marginDate alignElement">
                     <MuiPickersUtilsProvider utils={DateFnsUtils} >

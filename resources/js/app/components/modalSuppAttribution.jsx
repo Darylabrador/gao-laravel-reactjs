@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import { getToken } from '../services/tokenConfig';
+import { flashSuccess } from '../services/flashMessage';
 
 export default class SuppAttributionModal extends Component {
     constructor(props) {
@@ -24,13 +25,21 @@ export default class SuppAttributionModal extends Component {
      */
     async handleSubmit(event) {
         event.preventDefault();
-        await Axios.delete(`/api/computers/attributions/${this.state.idAssign}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
+        try {
+            const assignData = await Axios.delete(`/api/computers/attributions/${this.state.idAssign}`, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+            let responseData = assignData.data;
+            if(responseData.success) {
+                await this.props.suppAttribution(this.state.idAssign);
+                flashSuccess(responseData.message);
+                await this.handleClose();
             }
-        })
-        this.props.suppAttribution(this.state.idAssign);
-        await this.setState({ open: false })
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 

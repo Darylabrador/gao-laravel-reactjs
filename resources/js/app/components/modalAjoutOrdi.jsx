@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 import { getToken } from '../services/tokenConfig';
+import { flashSuccess, flashError } from '../services/flashMessage';
 
 export default class AjoutOrdinateurModal extends Component {
     constructor(props) {
@@ -39,17 +40,30 @@ export default class AjoutOrdinateurModal extends Component {
      */
     async handleSubmit(event) {
         event.preventDefault();
-        let dataSend = {
-            name: this.state.name
-        };
-        
-        await Axios.post('/api/computers', dataSend, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
+        try {
+            let dataSend = {
+                name: this.state.name
+            };
+            
+            const ordiData = await Axios.post('/api/computers', dataSend, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            });
+
+            let responseData = ordiData.data;
+            if(responseData.success) {
+                this.props.ajoutOrdi(true);
+                await this.setState({ name: "" });
+                flashSuccess(responseData.message)
+                this.handleClose();
+            } else {
+                flashError(responseData.message)
             }
-        })
-        this.props.ajoutOrdi(true);
-        await this.setState({ name: ""});
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     /**

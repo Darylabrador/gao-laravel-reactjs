@@ -4,7 +4,8 @@ import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { getToken } from '../services/tokenConfig';
-import { makeStyles } from '@material-ui/core/styles';
+import { flashSuccess } from '../services/flashMessage';
+
 
 export default class SuppOrdiModal extends Component {
     constructor(props) {
@@ -25,12 +26,23 @@ export default class SuppOrdiModal extends Component {
      */
     async handleSubmit(event) {
         event.preventDefault();
-        await Axios.delete(`/api/computers/${this.state.idOrdi}`, {
-            headers: {
-                Authorization: `Bearer ${getToken()}`
+        try {
+            const deleteOrdiData = await Axios.delete(`/api/computers/${this.state.idOrdi}`, {
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            })
+
+            let responseData = deleteOrdiData.data;
+
+            if(responseData.success) {
+                flashSuccess(responseData.message)
+                this.props.suppOrdi(true);
+                this.handleClose();
             }
-        })
-        this.props.suppOrdi(true);
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 

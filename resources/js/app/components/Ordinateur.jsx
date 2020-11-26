@@ -25,6 +25,7 @@ export default class OrdinateurCard extends Component {
         this.getDeleteOrdi     = this.getDeleteOrdi.bind(this);
         this.getSupAttribution = this.getSupAttribution.bind(this);
         this.getAddAttributions = this.getAddAttributions.bind(this);
+
     }
 
 
@@ -128,7 +129,6 @@ export default class OrdinateurCard extends Component {
         }
     }
 
-
     /**
      * Render ordinateur component
      */
@@ -144,7 +144,7 @@ export default class OrdinateurCard extends Component {
                                 </Typography>
                             </div>
                             <div>
-                                <SuppOrdiModal suppOrdi={this.getDeleteOrdi} idOrdi={this.props.ordinateur.id} />
+                                <SuppOrdiModal suppOrdi={this.getDeleteOrdi} idOrdi={this.props.ordinateur.id}  />
                             </div>
                         </div>
 

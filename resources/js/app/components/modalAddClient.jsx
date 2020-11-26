@@ -4,6 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
 import { getToken } from '../services/tokenConfig';
+import { flashSuccess, flashError } from '../services/flashMessage';
 
 export default class AjoutClientModal extends Component {
     constructor(props) {
@@ -70,11 +71,9 @@ export default class AjoutClientModal extends Component {
                 await this.setState({ name: "", surname: "", open: false });
                 await this.props.closeModal();
             } else {
+                flashError(responseData.message);
                 await this.props.closeModal();
-                alert(responseData.message)
             }
-
-        
         } catch (error) {
             console.error(error);
         }

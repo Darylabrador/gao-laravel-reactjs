@@ -8,6 +8,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import AjoutClientModal from './modalAddClient';
 import { getToken } from '../services/tokenConfig';
+import { flashSuccess, flashError} from '../services/flashMessage';
 
 export default class AjoutAttributionModal extends Component {
     constructor(props) {
@@ -44,19 +45,26 @@ export default class AjoutAttributionModal extends Component {
         let client       = event.target.value;
         let clientLength = client.length;
         if(clientLength > 2) {
-            const clientData   = await Axios.post('/api/client/search', { clientInfo: client}, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
-            });
-            const responseData = clientData.data.data;
-            let userLength = responseData.length;
 
-            if (userLength == 0) {
-                await this.setState({ userExist : false, defaultProps: { ...this.state.defaultProps, options: responseData } });
-            } else {
-                await this.setState({ userExist : true, defaultProps: { ...this.state.defaultProps, options: responseData } });
+            try {
+                const clientData = await Axios.post('/api/client/search', { clientInfo: client }, {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                });
+
+                const responseData = clientData.data.data;
+                let userLength = responseData.length;
+
+                if (userLength == 0) {
+                    await this.setState({ userExist: false, defaultProps: { ...this.state.defaultProps, options: responseData } });
+                } else {
+                    await this.setState({ userExist: true, defaultProps: { ...this.state.defaultProps, options: responseData } });
+                }
+            } catch (error) {
+                console.error(error)
             }
+        
         }   else {
             await this.setState({ userExist: false });
         }
@@ -80,9 +88,12 @@ export default class AjoutAttributionModal extends Component {
                     Authorization: `Bearer ${getToken()}`
                 }
             })
-            const responseData = attributionData.data.data;
-            await this.props.getAddAttributions(responseData);
-            await this.setState({ open: false });
+
+            const attributionDataSend = attributionData.data.data;
+            await this.props.getAddAttributions(attributionDataSend);
+            flashSuccess("Créneau réserver !")
+            this.handleClose();
+            
         } catch (error) {
             console.error(error)
         }
