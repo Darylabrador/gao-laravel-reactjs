@@ -10,7 +10,8 @@ export default class AjoutOrdinateurModal extends Component {
         super(props);
         this.state = { 
             name: "",
-            open: false
+            open: false,
+            disabledBtn: true
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -24,7 +25,11 @@ export default class AjoutOrdinateurModal extends Component {
      * @param {*} event 
      */
     async handleChange(event) { 
-       await this.setState({ name: event.target.value }); 
+        if (event.target.value.length > 3) {
+            await this.setState({ name: event.target.value, disabledBtn: false }); 
+        } else {
+            await this.setState({ name: event.target.value, disabledBtn: true }); 
+        }
     }
 
 
@@ -37,6 +42,7 @@ export default class AjoutOrdinateurModal extends Component {
         let dataSend = {
             name: this.state.name
         };
+        
         await Axios.post('/api/computers', dataSend, {
             headers: {
                 Authorization: `Bearer ${getToken()}`
@@ -66,6 +72,13 @@ export default class AjoutOrdinateurModal extends Component {
      * render add desktop modal
      */
     render() {
+        let buttonSubmit;
+        if(this.state.disabledBtn) {
+            buttonSubmit = (<Button type="submit" variant="contained" color="primary" className="btnSpace" disabled>Ajouter</Button>);
+        } else {
+            buttonSubmit = (<Button type="submit" variant="contained" color="primary" className="btnSpace">Ajouter</Button>);
+        }
+
         return (
             <div>
                 <Button>
@@ -85,7 +98,7 @@ export default class AjoutOrdinateurModal extends Component {
                             <input type="text" placeholder="Nom du poste" value={this.state.name} onChange={this.handleChange} />
                             <div>
                                 <Button variant="contained" color="default" onClick={this.handleClose} className="btnSpace">Annuler</Button>
-                                <Button type="submit" variant="contained" color="primary" className="btnSpace">Ajouter</Button>
+                                {buttonSubmit}
                             </div>
                         </div>
                     </form>

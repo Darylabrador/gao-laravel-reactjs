@@ -18,6 +18,7 @@ export default class AjoutAttributionModal extends Component {
             hours: this.props.hours,
             date: this.props.date,
             attributeInfo: {},
+            userExist: false,
             defaultProps: {
                 options: [],
                 getOptionLabel: (option) => `${option.name} ${option.surname}`,
@@ -30,6 +31,7 @@ export default class AjoutAttributionModal extends Component {
         this.handleOpen = this.handleOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.handleSelect = this.handleSelect.bind(this);
+        this.getInfoAttributionClient = this.getInfoAttributionClient.bind(this);
     }
 
 
@@ -41,7 +43,6 @@ export default class AjoutAttributionModal extends Component {
     async handleChange(event, value) {
         let client       = event.target.value;
         let clientLength = client.length;
-
         if(clientLength > 2) {
             const clientData   = await Axios.post('/api/client/search', { clientInfo: client}, {
                 headers: {
@@ -49,8 +50,16 @@ export default class AjoutAttributionModal extends Component {
                 }
             });
             const responseData = clientData.data.data;
-            await this.setState({ defaultProps: {...this.state.defaultProps, options: responseData}});
-        }   
+            let userLength = responseData.length;
+
+            if (userLength == 0) {
+                await this.setState({ userExist : false, defaultProps: { ...this.state.defaultProps, options: responseData } });
+            } else {
+                await this.setState({ userExist : true, defaultProps: { ...this.state.defaultProps, options: responseData } });
+            }
+        }   else {
+            await this.setState({ userExist: false });
+        }
     }
 
 
@@ -60,19 +69,23 @@ export default class AjoutAttributionModal extends Component {
      */
     async handleSubmit(event) {
         event.preventDefault();
-        const attributionData = await Axios.post('/api/computers/attributions', {
-            desktop_id: this.state.desktop_id,
-            client_id: this.state.attributeInfo.id,
-            hours: this.state.hours,
-            date: this.state.date
-        },{
-            headers: {
-                Authorization: `Bearer ${getToken()}`
-            }
-        })
-        const responseData = attributionData.data.data;
-        await this.props.getAddAttributions(responseData);
-        await this.setState({ open: false });
+        try {
+            const attributionData = await Axios.post('/api/computers/attributions', {
+                desktop_id: this.state.desktop_id,
+                client_id: this.state.attributeInfo.id,
+                hours: this.state.hours,
+                date: this.state.date
+            },{
+                headers: {
+                    Authorization: `Bearer ${getToken()}`
+                }
+            })
+            const responseData = attributionData.data.data;
+            await this.props.getAddAttributions(responseData);
+            await this.setState({ open: false });
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
@@ -104,9 +117,29 @@ export default class AjoutAttributionModal extends Component {
 
 
     /**
+     * handle create client and his assign
+     * @param {*} infoAssign 
+     */
+    async getInfoAttributionClient(infoAssign) {
+        await this.props.getAddAttributions(infoAssign);
+    }
+
+
+    /**
      * render the assign modal
      */
     render() {
+        let buttonAttribution;
+        if(this.state.userExist) {
+            buttonAttribution = (
+                <Button type="submit" variant="contained" color="primary" className="btnSpace">Attribuer</Button>
+            );
+        } else {
+            buttonAttribution=(
+                <Button type="submit" variant="contained" color="primary" className="btnSpace" disabled>Attribuer</Button>
+            );
+        }
+
         return (
             <div>
                 <AddCircleOutlineIcon size="small" className="greenFont btnStyle" onClick={this.handleOpen} />
@@ -118,6 +151,7 @@ export default class AjoutAttributionModal extends Component {
                     aria-describedby="simple-modal-description"
                     className="modalStyle"
                 >
+
                     <form onSubmit={this.handleSubmit} className="formStyle">
                         <h3>Attribuer</h3>
                         <div className="formInput">
@@ -132,14 +166,11 @@ export default class AjoutAttributionModal extends Component {
                                     onChange={this.handleSelect}
                                     renderInput={(params) => <TextField {...params} label="Le client" margin="normal" />}
                                 />
-
-                                <div className="btnStyleAttribution">
-                                    <AjoutClientModal desktop_id={this.state.desktop_id} hours={this.state.hours} date={this.state.date} closeModal={this.handleClose} />
-                                </div>
+                                <AjoutClientModal desktop_id={this.state.desktop_id} hours={this.state.hours} date={this.state.date} closeModal={this.handleClose} getInfoAttribution={this.getInfoAttributionClient} />
                             </div>
                             <div>
                                 <Button variant="contained" color="default" onClick={this.handleClose} className="btnSpace">Annuler</Button>
-                                <Button type="submit" variant="contained" color="primary" className="btnSpace">Attribuer</Button>
+                                {buttonAttribution}
                             </div>
                         </div>
                     </form>

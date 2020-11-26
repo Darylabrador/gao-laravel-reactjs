@@ -105,14 +105,16 @@ export default class OrdinateurCard extends Component {
      * @param {*} attributions 
      */
     async getAddAttributions(attributions) {
-        this.state.attributions[attributions.hours] = {
-            id: attributions.client.id,
-            surname: attributions.client.surname,
-            name: attributions.client.name,
-            idAssign: attributions.idAssign
+        if (attributions) {
+            this.state.attributions[attributions.hours] = {
+                id: attributions.client.id,
+                surname: attributions.client.surname,
+                name: attributions.client.name,
+                idAssign: attributions.idAssign
+            }
+            await this.initialize()
+            await this.displayHoraire()
         }
-        await this.initialize()
-        await this.displayHoraire()
     }
 
 
@@ -152,7 +154,7 @@ export default class OrdinateurCard extends Component {
                                     {this.state.timeslots.map((data, index) => (
                                         <TableRow key={index}>
                                             <TableCell size="small" component="th" scope="row">{data.hours}h</TableCell>
-                                            <TableCell align="center">{data.client.surname} {data.client.name}</TableCell>
+                                            <TableCell align="center"> {data.client.name} {data.client.surname} </TableCell>
                                             <TableCell align="right">
                                                 <Button>
                                                { data.client != ""

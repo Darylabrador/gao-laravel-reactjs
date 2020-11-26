@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -13,7 +14,7 @@ export default class AjoutClientModal extends Component {
             desktop_id: this.props.desktop_id,
             hours: this.props.hours,
             date: this.props.date,
-            open: false
+            open: false,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChangeName = this.handleChangeName.bind(this);
@@ -47,11 +48,36 @@ export default class AjoutClientModal extends Component {
      */
     async handleSubmit(event) {
         event.preventDefault();
-        await console.log(this.state.name)
-        await this.setState({ name: "" });
-        await this.setState({ surname: "" });
-        await this.setState({ open: false });
- 
+        try {
+            const createClientData = await Axios.post(`/api/client/attributions`,
+                {
+                    name: this.state.name,
+                    surname: this.state.surname,
+                    desktop_id: this.state.desktop_id,
+                    hours: this.state.hours,
+                    date: this.state.date
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${getToken()}`
+                    }
+                }
+            )
+            let responseData = createClientData.data;
+            if (responseData.success) {
+                let assignInfo = responseData.message;
+                await this.props.getInfoAttribution(assignInfo);
+                await this.setState({ name: "", surname: "", open: false });
+                await this.props.closeModal();
+            } else {
+                await this.props.closeModal();
+                alert(responseData.message)
+            }
+
+        
+        } catch (error) {
+            console.error(error);
+        }
     }
 
 
