@@ -6,7 +6,7 @@ import { setToken } from './services/tokenConfig';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { flashError } from './services/flashMessage';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 import Home from './Home';
 
 export default class Login extends Component {
@@ -73,6 +73,7 @@ export default class Login extends Component {
                         <Route exact path="/" >
                             <Home />
                         </Route>
+                        <Redirect to='/' />
                     </Router>
                 </React.Fragment>
             )

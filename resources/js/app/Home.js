@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Ordinateur from './components/Ordinateur';
 import Grid from '@material-ui/core/Grid';
 import Pagination from '@material-ui/lab/Pagination';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Button from '@material-ui/core/Button';
 
@@ -151,6 +151,7 @@ export default class Home extends Component {
                         <Route exact path="/" >
                             <Login />
                         </Route>
+                        <Redirect to='/' />
                     </Router>
                 </React.Fragment>
             )
