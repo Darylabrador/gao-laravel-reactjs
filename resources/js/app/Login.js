@@ -92,7 +92,7 @@ export default class Login extends Component {
                         pauseOnHover
                     />
                     <form onSubmit={this.handleSubmit} className="loginForm">
-                        <h3 className="whiteFont"> Bienvenue sur l'espace culturel </h3>
+                        <h3> Bienvenue sur l'espace culturel </h3>
                         <TextField type="email" label="Adresse email" value={this.state.email} onChange={this.handleChangeEmail} className="loginInput" />
                         <TextField type="password" label="Mot de passe" value={this.state.password} onChange={this.handleChangePassword} className="loginInput" />
                         <div className="btnLoginContainer">
