@@ -1,9 +1,8 @@
-import Axios from 'axios';
+import { apiService } from "../services/apiService";
 import React, {Component} from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
-import { getToken } from '../services/tokenConfig';
 import { flashSuccess, flashError } from '../services/flashMessage';
 
 export default class AjoutOrdinateurModal extends Component {
@@ -45,11 +44,7 @@ export default class AjoutOrdinateurModal extends Component {
                 name: this.state.name
             };
             
-            const ordiData = await Axios.post('/api/computers', dataSend, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
-            });
+            const ordiData = await apiService.post('/computers', dataSend);
 
             let responseData = ordiData.data;
             if(responseData.success) {

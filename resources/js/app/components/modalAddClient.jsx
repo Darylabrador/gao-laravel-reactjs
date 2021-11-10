@@ -1,9 +1,8 @@
-import Axios from 'axios';
+import { apiService } from "../services/apiService";
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import Button from '@material-ui/core/Button';
-import { getToken } from '../services/tokenConfig';
 import { flashSuccess, flashError } from '../services/flashMessage';
 
 export default class AjoutClientModal extends Component {
@@ -50,7 +49,7 @@ export default class AjoutClientModal extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            const createClientData = await Axios.post(`/api/client/attributions`,
+            const createClientData = await apiService.post(`/client/attributions`,
                 {
                     name: this.state.name,
                     surname: this.state.surname,
@@ -58,11 +57,6 @@ export default class AjoutClientModal extends Component {
                     hours: this.state.hours,
                     date: this.state.date
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${getToken()}`
-                    }
-                }
             )
             let responseData = createClientData.data;
             if (responseData.success) {

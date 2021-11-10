@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import { apiService } from "../services/apiService";
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import CreateIcon from '@material-ui/icons/Create';
@@ -47,11 +47,7 @@ export default class ModifOrdiModal extends Component {
 
             };
 
-            const ordiData = await Axios.put(`/api/computers/${this.state.idOrdi}`, dataSend, {
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
-            });
+            const ordiData = await apiService.put(`/computers/${this.state.idOrdi}`, dataSend);
 
             let responseData = ordiData.data;
             if (responseData.success) {

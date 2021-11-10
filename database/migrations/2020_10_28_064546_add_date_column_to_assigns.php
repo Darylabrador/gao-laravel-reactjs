@@ -13,7 +13,7 @@ class AddDateColumnToAssigns extends Migration
      */
     public function up()
     {
-        Schema::table('Assigns', function (Blueprint $table) {
+        Schema::table('assigns', function (Blueprint $table) {
             $table->date('date')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class AddDateColumnToAssigns extends Migration
      */
     public function down()
     {
-        Schema::table('Assigns', function (Blueprint $table) {
+        Schema::table('assigns', function (Blueprint $table) {
             $table->dropColumn('date');
         });
     }

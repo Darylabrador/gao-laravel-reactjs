@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import { apiService } from "../services/apiService";
 import React, { Component } from 'react';
 import Modal from '@material-ui/core/Modal';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -7,7 +7,6 @@ import Button from '@material-ui/core/Button';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import AjoutClientModal from './modalAddClient';
-import { getToken } from '../services/tokenConfig';
 import { flashSuccess, flashError} from '../services/flashMessage';
 
 export default class AjoutAttributionModal extends Component {
@@ -47,11 +46,7 @@ export default class AjoutAttributionModal extends Component {
         if(clientLength > 2) {
 
             try {
-                const clientData = await Axios.post('/api/client/search', { clientInfo: client }, {
-                    headers: {
-                        Authorization: `Bearer ${getToken()}`
-                    }
-                });
+                const clientData = await apiService.post('/client/search', { clientInfo: client });
 
                 const responseData = clientData.data.data;
                 let userLength = responseData.length;
@@ -78,15 +73,11 @@ export default class AjoutAttributionModal extends Component {
     async handleSubmit(event) {
         event.preventDefault();
         try {
-            const attributionData = await Axios.post('/api/computers/attributions', {
+            const attributionData = await apiService.post('/computers/attributions', {
                 desktop_id: this.state.desktop_id,
                 client_id: this.state.attributeInfo.id,
                 hours: this.state.hours,
                 date: this.state.date
-            },{
-                headers: {
-                    Authorization: `Bearer ${getToken()}`
-                }
             })
 
             const attributionDataSend = attributionData.data.data;
